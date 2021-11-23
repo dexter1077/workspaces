@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="boardMapper">
+    <resultMap id="boardResult" type="Board">
+        <result column="sn" property="sn"/>
+        <result column="bdtp_code" property="bdtpCode"/>
+        <result column="title" property="title"/>
+        <result column="contents" property="contents"/> 
+        <result column="rdcnt" property="rdcnt"/>
+        <result column="rgst_id" property="rgstId"/> 
+        <result column="rgst_dt" property="rgstDt"/>
+        <result column="updt_id" property="updtId"/> 
+        <result column="updt_dt" property="updtDt"/>
+        <result column="use_at" property="useAt"/> 
+        <result column="begin_dt" property="beginDt"/>
+        <result column="end_dt" property="endDt"/> 
+    </resultMap>
+    
+    <select id="selectBoardListCount" resultType="_int">
+        SELECT COUNT(*)
+          FROM TN_BOARD
+         WHERE USE_AT = 'Y'
+    </select>
+    
+    <select id="selectBoardList" resultMap="boardResult">
+        SELECT SN,
+               BDTP_CODE,
+               TITLE,
+               CONTENTS,
+               RDCNT,
+               RGST_ID,
+               TO_CHAR(RGST_DT , 'YYYY-MM-DD') AS RGST_DT,
+               UPDT_ID,
+               TO_CHAR(UPDT_DT , 'YYYY-MM-DD') AS UPDT_DT,
+               USE_AT,
+               TO_CHAR(BEGIN_DT , 'YYYY-MM-DD') AS BEGIN_DT,
+               TO_CHAR(END_DT , 'YYYY-MM-DD') AS END_DT
+          FROM TN_BOARD
+         WHERE USE_AT = 'Y'
+    </select>
+    
+    <select id="selectBoard" parameterType="int" resultMap="boardResult">
+         SELECT SN,
+               BDTP_CODE,
+               TITLE,
+               CONTENTS,
+               RDCNT,
+               RGST_ID,
+               TO_CHAR(RGST_DT , 'YYYY-MM-DD') AS RGST_DT,
+               UPDT_ID,
+               TO_CHAR(UPDT_DT , 'YYYY-MM-DD') AS UPDT_DT,
+               USE_AT,
+               TO_CHAR(BEGIN_DT , 'YYYY-MM-DD') AS BEGIN_DT,
+               TO_CHAR(END_DT , 'YYYY-MM-DD') AS END_DT
+          FROM TN_BOARD
+         WHERE USE_AT = 'Y'
+           AND SN = ${sn}
+    </select>
+    
+    <insert id="insertBoard">
+        INSERT 
+          INTO TN_BOARD
+          (
+          )
+          VALUES
+          (
+          )
+    </insert>
+    
+    <update id="updateBoard">
+        UPDATE TN_BOARD
+           SET 
+    </update>
+    
+    <update id="deleteBoard">
+        UPDATE TN_BOARD
+           SET USE_AT = 'N'
+         WHERE SN = ${sn}
+    </update>
+    
+</mapper>
